@@ -34,6 +34,14 @@ export class CreateSerieDto {
   readonly director: string;
 
   @ApiProperty()
+  @IsNotEmpty({ message: 'El campo tipoGenero no debe ser vacío' })
+  @IsString({ message: 'El campo tipoGenero debe ser de tipo cadena' })
+  @MaxLength(100, {
+    message: 'El campo tipoGenero no debe ser mayor a 100 caracteres',
+  })
+  readonly tipoGenero: string;
+
+  @ApiProperty()
   @IsNotEmpty({ message: 'El campo temporadas no debe ser vacío' })
   @IsNumber({}, { message: 'El campo temporadas debe ser de tipo numero' })
   readonly temporadas: number;

@@ -21,6 +21,7 @@ export class SeriesService {
       titulo: createSerieDto.titulo.trim(),
       sinopsis: createSerieDto.sinopsis.trim(),
       director: createSerieDto.director.trim(),
+      tipoGenero: createSerieDto.tipoGenero.trim(),
       temporadas: createSerieDto.temporadas,
       fechaEstreno: createSerieDto.fechaEstreno,
     });
@@ -31,6 +32,7 @@ export class SeriesService {
     serie.titulo = createSerieDto.titulo.trim();
     serie.sinopsis = createSerieDto.sinopsis.trim();
     serie.director = createSerieDto.director.trim();
+    serie.tipoGenero = createSerieDto.tipoGenero.trim();
     serie.temporadas = createSerieDto.temporadas;
     serie.fechaEstreno = createSerieDto.fechaEstreno;
     return this.seriesRepository.save(serie);

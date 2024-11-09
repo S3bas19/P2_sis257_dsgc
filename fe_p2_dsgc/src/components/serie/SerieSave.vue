@@ -5,6 +5,7 @@ import http from '@/plugins/axios'
 import { Calendar } from 'primevue'
 import Button from 'primevue/button'
 import Dialog from 'primevue/dialog'
+import Select from 'primevue/select'
 import InputText from 'primevue/inputtext'
 import { computed, ref, watch } from 'vue'
 
@@ -26,11 +27,18 @@ const dialogVisible = computed({
   },
 })
 
+const series = ref<Serie[]>([])
+
+async function obtenerSeries() {
+  series.value = await http.get('series').then((response) => response.data)
+}
+
 const serie = ref<Serie>({ ...props.serie })
 watch(
   () => props.serie,
   (newVal) => {
     serie.value = { ...newVal }
+    obtenerSeries()
   },
 )
 
@@ -40,6 +48,7 @@ async function handleSave() {
       titulo: serie.value.titulo,
       sinopsis: serie.value.sinopsis,
       director: serie.value.director,
+      tipoGenero: serie.value.tipoGenero,
       temporadas: serie.value.temporadas,
       fechaEstreno: serie.value.fechaEstreno,
     }
@@ -93,6 +102,18 @@ async function handleSave() {
           autocomplete="off"
           autofocus
         />
+      </div>
+      <div class="flex items-center gap-4 mb-4">
+        <label for="tipoGenero" class="font-semibold w-4">Tipo de géneros</label>
+        <Select
+          id="tipoGenero"
+          editable
+          :options="series"
+          v-model="serie.tipoGenero"
+          optionLabel="tipoGenero"
+          placeholder="Selecciona un tipo"
+          class="flex-auto"
+        ></Select>
       </div>
       <div class="flex items-center gap-4 mb-4">
         <label for="temporadas" class="font-semibold w-24">Temporadas</label>
